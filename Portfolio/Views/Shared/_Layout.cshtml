@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400,300,700,600' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="/Content/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="/Content/css/hover.css">
+    <link rel="stylesheet" type="text/css" href="/Content/css/style.css">
+    @RenderPage("~/Views/Shared/_Analytics.cshtml")
+</head>
+<body>
+<div id="main-section">
+    <div id="header">
+        <div id="title">
+            <img id="banner-img" src="/Content/img/banner.png"/>
+        </div>
+        <div id="nav-bar-container">
+            <div id="nav-bar">
+                <a href="/" id="home-btn" class="hvr-underline-reveal standard-button title-bar-button">Home <i class="fa fa-home"></i></a>
+                <a href="/Projects" id="games-btn" class="hvr-underline-reveal standard-button title-bar-button">Projects <i class="fa fa-gamepad"></i></a>
+                <a href="/Blog" id="blog-btn" class="hvr-underline-reveal standard-button title-bar-button">Blog <i class="fa fa-comment"></i></a>
+                <a href="/About" id="about-btn" class="hvr-underline-reveal standard-button title-bar-button">About <i class="fa fa-user"></i></a>
+            </div>
+        </div>
+    </div>
+    <div id="page">
+        @RenderBody()
+    </div>
+</div>
+</body>
+</html>

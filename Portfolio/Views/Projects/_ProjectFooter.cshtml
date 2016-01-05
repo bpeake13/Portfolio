@@ -1,0 +1,68 @@
+﻿@using PortfolioLib.Data
+@{ProjectInfo projectInfo = (ProjectInfo)ViewData["Project"];}
+
+<form>
+	<head>
+		<link rel="stylesheet" type="text/css" href="/Content/css/project-footer-style.css">
+	</head>
+	<p id="description-block">@Html.Raw(File.ReadAllText(Server.MapPath("~/Content/Projects/" + projectInfo.SafeName + "/_description.html")))</p>
+	@if(!string.IsNullOrEmpty(projectInfo.DownloadLocation))
+	{
+		<div style="margin: 50px auto; display:table;"><a href="/Files?fileId=@Url.Encode(projectInfo.DownloadLocation)") class="hvr-underline-reveal standard-button">Download <i class="fa fa-download"></i></a></div>
+	}
+	else
+	{
+		<div style="margin: 50px 0"></div>
+	}
+	<h3>Project Info <i class="fa fa-info-circle"></i></h3>
+	<table id="game-info-table">
+		<tbody>
+			<tr>
+				<td>Start Date</td><td>@projectInfo.StartDate.ToString("MMM yyyy")</td>
+			</tr>
+			@if(projectInfo.EndDate > projectInfo.StartDate)
+			{
+			<tr>
+				<td>End Date</td><td>@projectInfo.EndDate.ToString("MMM yyyy")</td>
+			</tr>
+			}
+			<tr>
+				<td>Role</td><td>@projectInfo.Role</td>
+			</tr>
+			@if(projectInfo.Tools != null && projectInfo.Tools.Length > 0)
+			{
+				<tr>
+					<td>Tools</td>
+					<td>
+						@foreach(string tool in projectInfo.Tools)
+						{
+							<p style="margin: 0 0">@tool</p>
+						}
+					</td>
+				</tr>
+			}
+			@if(projectInfo.RepoUrlType != ProjectInfo.RepoType.None)
+			{
+			<tr>
+				<td>Repository</td><td><a class="link" href="@projectInfo.RepoUrl">@projectInfo.RepoUrl</a></td>
+			</tr>
+			}
+			@if(projectInfo.Credits != null && projectInfo.Credits.Length > 0)
+			{
+				<tr>
+					<td>Credits</td>
+					<td>
+						@foreach(string credit in projectInfo.Credits)
+						{
+							Person person = Person.GetPerson(credit);
+							string portfolioUrl = person.GetPortfolioUrl();
+
+						    <a class="link" @{string href = string.IsNullOrEmpty(portfolioUrl) ? "" : "href=\"" + portfolioUrl + "\"";}>@person.GetName() @person.GetNote()</a>
+                            <br/>
+						}
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</form>

@@ -1,0 +1,33 @@
+﻿<head>
+	<link rel="stylesheet" type="text/css" href="/Content/css/about-style.css">
+</head>
+<div id="profile-block">
+	<div id="bio-block">
+		@RenderPage("_bio.cshtml")
+	</div>
+	<div id="profile-pic-block"></div>
+</div>
+<div>
+	<h2>Learn More!</h2>
+	<table id="more-info-table">
+		<tbody>
+			<tr>
+				<td id="skills-section">
+					<h3>Skills!</h3>
+					<div id="skills-list">
+						@RenderPage("_skills.cshtml")
+					</div>
+				</td>
+				<td>
+					<h3>Resume!</h3>
+					<div style="margin: 50px auto; display:table;"><a href="/Files?fileId=@Url.Encode("Content/Resume.pdf")" class="hvr-underline-reveal standard-button">PDF <i class="fa fa-download"></i></a></div>
+					<div style="margin: 50px auto; display:table;"><a href="/Files?fileId=@Url.Encode("Content/Resume.docx")" class="hvr-underline-reveal standard-button">DOCX <i class="fa fa-download"></i></a></div>
+				</td>
+				<td>
+					<h3>Contact Me!</h3>
+                    <div style="margin: 100px auto; display:table;"><a href="mailto:bennypeake@gmail.com" class="hvr-underline-reveal standard-button">EMAIL <i class="fa fa-envelope-o"></i></a></div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

@@ -1,0 +1,37 @@
+﻿@using PortfolioLib.Data
+
+@{
+	ProjectInfo projectInfo = (ProjectInfo)ViewData["Project"];
+	StandardProjectTypeInfo projectTypeInfo = (StandardProjectTypeInfo)projectInfo.TypeInfo;
+}
+
+<head>
+	<link rel="stylesheet" href="/Content/css/flexslider.css" type="text/css">
+	<link rel="stylesheet" href="/Content/css/project-gallery-style.css" type="text/css">
+	<script src="/Scripts/jquery.flexslider-min.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		$(window).load(function() {
+			$('.flexslider').flexslider({
+				animation: "slide",
+				animationLoop: true,
+				touch: true,
+				itemWidth: 0
+			});
+		});
+	</script>
+</head>
+@RenderPage("_ProjectHeader.cshtml")
+<div class="flexslider" style="background-color:#444444; border-color:#444444;">
+	<ul class="slides">
+		@for(int i = 0; i < projectTypeInfo.GetSourceCount(); i++)
+		{
+			string source = projectTypeInfo.GetSource(i);
+
+			<li style="position:relative">
+				<div class="gallery-image" style="background-image:url(@source);">
+				</div>
+			</li>
+		}
+	</ul>
+</div>
+@RenderPage("_ProjectFooter.cshtml")

@@ -1,0 +1,22 @@
+﻿@using PortfolioLib.Data
+
+<head>
+	<link rel="stylesheet" type="text/css" href="/Content/css/projects-index-style.css">
+</head>
+
+<div>
+@{
+	List<ProjectInfo> projectList = ViewData["ProjectList"] as List<ProjectInfo>;
+	foreach(var project in projectList)
+	{
+		<div class="project-display">
+			<a href="/Projects/Project?projectSafeName=@project.SafeName" style="text-decoration:none;">
+				<h3 class="project-title">@project.ProjectName</h3>
+				<div class="project-img" style="background-image:url(@project.BannerLocation)"></div>
+				<p class="project-desc">@project.ShortDescription</p>
+				<p class="project-desc"><b>(@project.StartDate.ToString("MMM yyyy"))</b></p>
+			</a>
+		</div>
+	}
+}
+</div>

@@ -1,0 +1,65 @@
+﻿@using System.Runtime.Serialization.Json
+@using PortfolioLib.Data
+
+<header>
+    <link rel="stylesheet" type="text/css" href="/Content/css/projects-index-style.css">
+</header>
+<h1>Welcome!!</h1>
+<p>My name is Benny Peake, and this is my portfolio website! I am a programmer and game designer living in Worcester, Massachusetts.</p>
+<p>Please feel free to check out my projects and blog, and if you would like to contact me you can reach me at 
+<a class="link" href="mailto:bennypeake@gmail.com" target="_top">bennypeake@gmail.com</a></p>
+<h1>Recent</h1>
+@{
+    DirectoryInfo projectDirectory = new DirectoryInfo(Server.MapPath("~/Content/Projects"));
+    DirectoryInfo[] childDirectories = projectDirectory.GetDirectories("*", SearchOption.TopDirectoryOnly);
+
+    List<ProjectInfo> projects = new List<ProjectInfo>(childDirectories.Length);
+    foreach (DirectoryInfo child in childDirectories)
+    {
+        if (child.Name.StartsWith("_"))
+        {
+            continue;
+        }
+
+        FileInfo metaFileInfo = new FileInfo(Path.Combine(child.FullName, "_metaInfo.json"));
+        if (!metaFileInfo.Exists)
+        {
+            continue;
+        }
+
+
+        try
+        {
+            DataContractJsonSerializer parser = new DataContractJsonSerializer(typeof(ProjectInfo));
+
+            using (FileStream stream = metaFileInfo.Open(FileMode.Open, FileAccess.Read))
+            {
+                ProjectInfo project = parser.ReadObject(stream) as ProjectInfo;
+                projects.Add(project);
+            }
+        }
+        catch (Exception)
+        {
+            continue;
+        }
+    }
+
+    projects.Sort((x, y) => -x.StartDate.CompareTo(y.StartDate));
+
+    for (int i = 0, good = 0; i < projects.Count && good < 2; i++)
+    {
+        ProjectInfo project = projects[i];
+
+        <div class="project-display">
+            <a href="/Projects/Project?projectSafeName=@project.SafeName" style="text-decoration: none;">
+                <h3 class="project-title">@project.ProjectName</h3>
+                <div class="project-img" style="background-image: url(@project.BannerLocation)"></div>
+                <p class="project-desc">@project.ShortDescription</p>
+                <p class="project-desc"><b>(@project.StartDate.ToString("MMM yyyy"))</b>
+                </p>
+            </a>
+        </div>
+
+        good++;
+    }
+}

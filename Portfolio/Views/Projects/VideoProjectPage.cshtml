@@ -1,0 +1,12 @@
+﻿@using PortfolioLib.Data
+
+@{
+	ProjectInfo projectInfo = (ProjectInfo)ViewData["Project"];
+	VideoProjectTypeInfo projectTypeInfo = (VideoProjectTypeInfo)projectInfo.TypeInfo;
+}
+
+@RenderPage("_ProjectHeader.cshtml")
+<div>
+	<iframe style="margin: 0 auto; display: block;" src="@projectTypeInfo.SourceUrl" width="990" height="557" frameborder="0" allowfullscreen></iframe>
+</div>
+@RenderPage("_ProjectFooter.cshtml")
